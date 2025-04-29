@@ -2,3 +2,5 @@ env: "local"
 grpc_server:
   host: "localhost"
   port: "50051"
+sso_db:
+  dsn: "host=localhost user=postgres password=admin dbname=storagemaster port=5432 sslmode=disable"
