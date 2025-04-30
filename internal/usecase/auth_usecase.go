@@ -39,7 +39,6 @@ func (uc *authUseCase) Register(login, username, password string) (string, error
 		return "", err
 	}
 
-
 	return user.ID, nil
 }
 
@@ -63,4 +62,9 @@ func (uc *authUseCase) Login(login, password string) (string, error) {
 
 	return token, nil
 
+}
+
+func (uc *authUseCase) ValidateToken(token string) (string, error) {
+	userID, err := uc.tokenService.ValidateAccessToken(token)
+	return userID, err
 }
