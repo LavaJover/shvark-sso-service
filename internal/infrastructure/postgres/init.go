@@ -14,5 +14,7 @@ func InitDB(dsn string) *gorm.DB {
 		log.Fatalf("failed to connect to db: %v", err)
 	}
 
+	db.AutoMigrate(&UserModel{})
+
 	return db
 }
