@@ -49,5 +49,14 @@ func (h *AuthHandler) ValidateToken(ctx context.Context, req *ssopb.ValidateToke
 }
 
 func (h *AuthHandler) GetUserByToken(ctx context.Context, req *ssopb.GetUserByTokenRequest) (*ssopb.GetUserByTokenResponse, error) {
+	user, err := h.AuthUseCase.GetUserByToken(req.AccessToken)
+	if err != nil{
+		return nil, err
+	}
 
+	return &ssopb.GetUserByTokenResponse{
+		UserId: user.ID,
+		Login: user.Login,
+		Username: user.Username,
+	}, nil
 }

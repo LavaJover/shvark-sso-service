@@ -30,7 +30,7 @@ func (uc *authUseCase) Register(login, username, password string) (string, error
 	}
 
 	// creating user
-	user, err := domain.NewUser(login, string(hashed))
+	user, err := domain.NewUser(login, username, string(hashed))
 	if err != nil{
 		return "", err
 	}
@@ -67,4 +67,20 @@ func (uc *authUseCase) Login(login, password string) (string, error) {
 func (uc *authUseCase) ValidateToken(token string) (string, error) {
 	userID, err := uc.tokenService.ValidateAccessToken(token)
 	return userID, err
+}
+
+func (uc *authUseCase) GetUserByToken(token string) (*domain.User, error){
+	// firstly validate the token
+	userID, err := uc.tokenService.ValidateAccessToken(token)
+	if err != nil{
+		return nil ,err
+	}
+
+	// find concrete user by userID
+	user, err := uc.repo.FindByID(userID)
+	if err != nil{
+		return nil, err
+	}
+
+	return user, nil
 }

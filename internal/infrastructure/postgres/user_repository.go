@@ -20,6 +20,7 @@ func (r *userRepository) Create(user *domain.User) error {
 	model := &UserModel{
 		ID: uuid.New().String(),
 		Login: user.Login,
+		Username: user.Username,
 		PasswordHash: user.Password,
 		CreatedAt: time.Now(),
 	}
@@ -42,6 +43,7 @@ func (r *userRepository) FindByLogin(login string) (*domain.User, error) {
 	return &domain.User{
 		ID:       model.ID,
 		Login:    model.Login,
+		Username: model.Username,
 		Password: model.PasswordHash,
 	}, nil
 }
@@ -58,6 +60,7 @@ func (r *userRepository) FindByID(id string) (*domain.User, error) {
 	return &domain.User{
 		ID:       model.ID,
 		Login:    model.Login,
+		Username: model.Username,
 		Password: model.PasswordHash,
 	}, nil
 }
