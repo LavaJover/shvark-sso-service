@@ -17,7 +17,7 @@ func NewAuthUseCase(r domain.UserRepository, t domain.TokenService) AuthUseCase 
 	}
 }
 
-func (uc *authUseCase) Register(login, password string) (string, error) {
+func (uc *authUseCase) Register(login, username, password string) (string, error) {
 	// is login already in use?
 	if exist, _ := uc.repo.FindByLogin(login); exist != nil{
 		return "", domain.ErrInvalidLogin
@@ -39,13 +39,8 @@ func (uc *authUseCase) Register(login, password string) (string, error) {
 		return "", err
 	}
 
-	// generating token
-	token, err := uc.tokenService.GenerateAccessToken(user)
-	if err != nil{
-		return "", err
-	}
 
-	return token, nil
+	return user.ID, nil
 }
 
 func (uc *authUseCase) Login(login, password string) (string, error) {
