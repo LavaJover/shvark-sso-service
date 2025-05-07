@@ -10,7 +10,7 @@ type authUseCase struct {
 	tokenService 	domain.TokenService
 }
 
-func NewAuthUseCase(r domain.UserRepository, t domain.TokenService) AuthUseCase {
+func NewAuthUseCase(r domain.UserRepository, t domain.TokenService) domain.AuthUseCase {
 	return &authUseCase{
 		repo: r,
 		tokenService: t,

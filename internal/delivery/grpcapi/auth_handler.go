@@ -3,13 +3,13 @@ package grpcapi
 import (
 	"context"
 
-	"github.com/LavaJover/shvark-sso-service/internal/usecase"
+	"github.com/LavaJover/shvark-sso-service/internal/domain"
 	ssopb "github.com/LavaJover/shvark-sso-service/proto/gen"
 )
 
 type AuthHandler struct {
 	ssopb.UnimplementedSSOServiceServer
-	usecase.AuthUseCase
+	domain.AuthUseCase
 }
 
 func (h *AuthHandler) Register(ctx context.Context, req *ssopb.RegisterRequest) (*ssopb.RegisterResponse, error) {
