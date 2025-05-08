@@ -7,5 +7,6 @@ var (
 	ErrEmptyPassword = errors.New("password cannot be empty")
 	ErrUserNotFound = errors.New("user not found")
 	ErrInvalidToken = errors.New("invalid or expired token")
+	ErrLoginNotFound = errors.New("login not found")
 )
 
