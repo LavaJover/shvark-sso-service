@@ -96,3 +96,4 @@ func TestAuthUsecase_Login_Success(t *testing.T) {
 	mockUserRepo.AssertExpectations(t)
 	mockToken.AssertExpectations(t)
 }
+
