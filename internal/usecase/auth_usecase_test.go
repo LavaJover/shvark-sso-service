@@ -2,11 +2,14 @@ package usecase
 
 import (
 	"testing"
+	"time"
 
 	"github.com/LavaJover/shvark-sso-service/internal/domain"
+	"github.com/LavaJover/shvark-sso-service/internal/infrastructure/jwt"
 	"github.com/LavaJover/shvark-sso-service/internal/mocks"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
+	"github.com/stretchr/testify/require"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -118,5 +121,29 @@ func TestAuthUsecase_Login_UserNotFound(t *testing.T) {
 }
 
 func TestAuthUsecase_GetUserByToken_Success(t *testing.T) {
+	mockUserRepo := new(mocks.UserRepository)
+	mockToken := new(mocks.TokenService)
 
+	userID := "some-user-id" 
+	user := &domain.User{ID: userID}
+	accessToken, err := jwt.NewTokenService("secret", time.Minute*15).GenerateAccessToken(user)
+	require.NoError(t, err)
+	require.NotEmpty(t, accessToken)
+
+	// Поведение: токен валиден
+	mockToken.On("ValidateAccessToken", accessToken).
+		Return(userID, nil)
+	
+	// Поведение: пользователь с таким ID найден
+	mockUserRepo.On("FindByID", userID).
+		Return(&domain.User{ID: userID}, nil)
+
+	// Запуск usecase
+	authUC := NewAuthUseCase(mockUserRepo, mockToken)
+	actualUser, err := authUC.GetUserByToken(accessToken)
+	require.NoError(t, err)
+	assert.Equal(t, userID, actualUser.ID)
+
+	mockUserRepo.AssertExpectations(t)
+	mockToken.AssertExpectations(t)
 }
