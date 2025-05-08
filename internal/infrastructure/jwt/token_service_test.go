@@ -6,6 +6,7 @@ import (
 
 	"github.com/LavaJover/shvark-sso-service/internal/domain"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestValidateAccessToken(t *testing.T) {
@@ -19,7 +20,7 @@ func TestValidateAccessToken(t *testing.T) {
 	accessTokens := make([]string, 3)
 	for i := range 3{
 		accessToken, err := tokenService.GenerateAccessToken(users[i])
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		accessTokens[i] = accessToken
 	}
 

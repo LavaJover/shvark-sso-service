@@ -97,3 +97,26 @@ func TestAuthUsecase_Login_Success(t *testing.T) {
 	mockToken.AssertExpectations(t)
 }
 
+func TestAuthUsecase_Login_UserNotFound(t *testing.T) {
+	mockUserRepo := new(mocks.UserRepository)
+	mockToken := new(mocks.TokenService)
+
+	login := "boris"
+	password := "secure"
+
+	// Поведение: логин не найден в системе
+	mockUserRepo.On("FindByLogin", login).
+		Return(nil, domain.ErrLoginNotFound)
+
+	authUC := NewAuthUseCase(mockUserRepo, mockToken)
+	accessToken, err := authUC.Login(login, password)
+
+	assert.Empty(t, accessToken)
+	assert.ErrorIs(t, err, domain.ErrLoginNotFound)
+
+	mockUserRepo.AssertExpectations(t)
+}
+
+func TestAuthUsecase_GetUserByToken_Success(t *testing.T) {
+
+}
