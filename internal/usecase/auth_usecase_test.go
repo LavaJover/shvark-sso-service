@@ -39,3 +39,23 @@ func TestAuthUsecase_Register_Success(t *testing.T){
 
 	mockUserRepo.AssertExpectations(t)
 }
+
+func TestAuthUsecase_Register_LoginExists(t *testing.T) {
+	mockUserRepo := new(mocks.UserRepository)
+	mockTocken := new(mocks.TokenService)
+
+	login := "boris"
+	username := "britva"
+	password := "secure"
+
+	mockUserRepo.EXPECT().
+		FindByLogin(login).
+		Return(&domain.User{Login: login}, nil)
+
+	authUC := NewAuthUseCase(mockUserRepo, mockTocken)
+
+	userID, err := authUC.Register(login, username, password)
+
+	assert.ErrorIs(t, err, domain.ErrInvalidLogin)
+	assert.Empty(t, userID)
+}
