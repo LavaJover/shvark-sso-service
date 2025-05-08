@@ -46,7 +46,7 @@ func (uc *authUseCase) Login(login, password string) (string, error) {
 	// searching by login
 	user, err := uc.repo.FindByLogin(login)
 	if err != nil{
-		return "", domain.ErrInvalidLogin
+		return "", domain.ErrLoginNotFound
 	}
 
 	// checking password
