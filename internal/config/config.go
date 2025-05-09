@@ -7,9 +7,10 @@ import (
 )
 
 type SSOConfig struct {
-	Env string `yaml:"env"`
-	GRPCServer `yaml:"grpc_server"`
-	SSODB `yaml:"sso_db"`
+	Env string 	`yaml:"env"`
+	GRPCServer 	`yaml:"grpc_server"`
+	SSODB 		`yaml:"sso_db"`
+	LogConfig 	`yaml:"log_config"`
 }
 
 type GRPCServer struct {
@@ -19,6 +20,12 @@ type GRPCServer struct {
 
 type SSODB struct {
 	Dsn string `yaml:"dsn"`
+}
+
+type LogConfig struct {
+	LogLevel 	string 	`yaml:"log_level"`
+	LogFormat 	string 	`yaml:"log_format"`
+	LogOutput 	string 	`yaml:"log_output"`
 }
 
 func MustLoad() *SSOConfig {

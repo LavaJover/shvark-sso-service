@@ -4,3 +4,7 @@ grpc_server:
   port: "50051"
 sso_db:
   dsn: "host=localhost user=postgres password=admin dbname=shvarktest port=5432 sslmode=disable"
+log_config:
+  log_level: "debug"
+  log_format: "json"
+  log_output: "stdout"
