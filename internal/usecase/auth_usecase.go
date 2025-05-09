@@ -2,22 +2,34 @@ package usecase
 
 import (
 	"github.com/LavaJover/shvark-sso-service/internal/domain"
+	"github.com/sirupsen/logrus"
 	"golang.org/x/crypto/bcrypt"
 )
 
 type authUseCase struct {
 	repo 			domain.UserRepository
 	tokenService 	domain.TokenService
+	logger 			*logrus.Entry
 }
 
 func NewAuthUseCase(r domain.UserRepository, t domain.TokenService) domain.AuthUseCase {
+	logger := logrus.New()
+	logger.SetFormatter(&logrus.JSONFormatter{})
+	logger.SetLevel(logrus.DebugLevel)
+
 	return &authUseCase{
 		repo: r,
 		tokenService: t,
+		logger: logger.WithField("component", "authUseCase"),
 	}
 }
 
 func (uc *authUseCase) Register(login, username, password string) (string, error) {
+	uc.logger.WithFields(logrus.Fields{
+		"action": "Register",
+		"login": "login",
+	}).Info("attempt to register user")
+
 	// is login already in use?
 	if exist, _ := uc.repo.FindByLogin(login); exist != nil{
 		return "", domain.ErrInvalidLogin
