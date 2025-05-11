@@ -7,6 +7,13 @@ import (
 
 var log *zap.Logger
 
-func InitLogger(cfg *config.SSOConfig) (*zap.Logger, error) {
-	
+func InitLogger(cfg *config.SSOConfig) (*zap.Logger) {
+	switch cfg.Env{
+	case "local":
+		log = zap.Must(zap.NewDevelopment())
+	case "prod":
+		log = zap.Must(zap.NewProduction())
+	}
+
+	return log
 }

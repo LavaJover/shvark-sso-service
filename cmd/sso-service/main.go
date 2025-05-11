@@ -2,14 +2,15 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net"
 	"time"
+	"log"
 
 	"github.com/LavaJover/shvark-sso-service/internal/config"
 	"github.com/LavaJover/shvark-sso-service/internal/delivery/grpcapi"
 	"github.com/LavaJover/shvark-sso-service/internal/infrastructure/jwt"
 	"github.com/LavaJover/shvark-sso-service/internal/infrastructure/postgres"
+	"github.com/LavaJover/shvark-sso-service/internal/logger"
 	"github.com/LavaJover/shvark-sso-service/internal/usecase"
 	ssopb "github.com/LavaJover/shvark-sso-service/proto/gen"
 	"google.golang.org/grpc"
@@ -18,8 +19,13 @@ import (
 func main(){
 	// processing app config
 	cfg := config.MustLoad()
+
+	// creating logger
+	myLog := logger.InitLogger(cfg)
 	
 	// init db
+	myLog.Debug("init database")
+
 	dsn := cfg.Dsn
 	db := postgres.InitDB(dsn)
 
