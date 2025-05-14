@@ -14,6 +14,6 @@ func InitLogger(cfg *config.SSOConfig) (*zap.Logger) {
 	case "prod":
 		log = zap.Must(zap.NewProduction())
 	}
-
+	
 	return log
 }
