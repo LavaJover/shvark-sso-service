@@ -51,3 +51,27 @@ func (userClient *UserClient) CreateUser(user *domain.User) (string, error) {
 
 	return response.UserId, nil
 }
+
+func (UserClient *UserClient) GetUserByLogin(login string) (*domain.User, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*2)
+	defer cancel()
+
+	response, err := UserClient.client.GetUserByLogin(
+		ctx,
+		&userpb.GetUserByLoginRequest{
+			Login: login,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	user := &domain.User{
+		ID: response.UserId,
+		Login: response.Login,
+		Username: response.Username,
+		Password: response.Password,
+	}
+
+	return user, nil
+}
