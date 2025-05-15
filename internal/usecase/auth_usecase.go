@@ -63,7 +63,10 @@ func (uc *authUseCase) Register(login, username, password string) (string, error
 
 func (uc *authUseCase) Login(login, password string) (string, error) {
 	// searching by login
-	
+	user, err := uc.userClient.GetUserByLogin(login)
+	if err != nil{
+		return "", nil
+	}
 
 	// checking password
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
