@@ -1,7 +1,9 @@
 package usecase
 
 import (
+	"github.com/LavaJover/shvark-sso-service/internal/client"
 	"github.com/LavaJover/shvark-sso-service/internal/domain"
+	"github.com/google/uuid"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -10,6 +12,7 @@ type authUseCase struct {
 	repo 			domain.UserRepository
 	tokenService 	domain.TokenService
 	logger 			*logrus.Entry
+	userClient		*client.UserClient
 }
 
 func NewAuthUseCase(r domain.UserRepository, t domain.TokenService) domain.AuthUseCase {
@@ -31,8 +34,8 @@ func (uc *authUseCase) Register(login, username, password string) (string, error
 	}).Info("attempt to register user")
 
 	// is login already in use?
-	if exist, _ := uc.repo.FindByLogin(login); exist != nil{
-		return "", domain.ErrInvalidLogin
+	if exist, _ := uc.userClient.CheckUserExists(login); exist{
+		return "", domain.ErrLoginAlreadyTaken
 	}
 
 	// hashing password
@@ -42,16 +45,20 @@ func (uc *authUseCase) Register(login, username, password string) (string, error
 	}
 
 	// creating user
-	user, err := domain.NewUser(login, username, string(hashed))
+	user := &domain.User{
+		ID: uuid.New().String(),
+		Login: login,
+		Username: username,
+		Password: string(hashed),
+	}
+
+	// saving user on client side to database
+	userID, err := uc.userClient.CreateUser(user)
 	if err != nil{
 		return "", err
 	}
 
-	if err := uc.repo.Create(user); err != nil{
-		return "", err
-	}
-
-	return user.ID, nil
+	return userID, nil
 }
 
 func (uc *authUseCase) Login(login, password string) (string, error) {

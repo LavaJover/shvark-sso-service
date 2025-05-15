@@ -8,5 +8,6 @@ var (
 	ErrUserNotFound = errors.New("user not found")
 	ErrInvalidToken = errors.New("invalid or expired token")
 	ErrLoginNotFound = errors.New("login not found")
+	ErrLoginAlreadyTaken = errors.New("login is already taken")
 )
 
