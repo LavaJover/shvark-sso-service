@@ -52,11 +52,11 @@ func (userClient *UserClient) CreateUser(user *domain.User) (string, error) {
 	return response.UserId, nil
 }
 
-func (UserClient *UserClient) GetUserByLogin(login string) (*domain.User, error) {
+func (userClient *UserClient) GetUserByLogin(login string) (*domain.User, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*2)
 	defer cancel()
 
-	response, err := UserClient.client.GetUserByLogin(
+	response, err := userClient.client.GetUserByLogin(
 		ctx,
 		&userpb.GetUserByLoginRequest{
 			Login: login,
@@ -71,6 +71,28 @@ func (UserClient *UserClient) GetUserByLogin(login string) (*domain.User, error)
 		Login: response.Login,
 		Username: response.Username,
 		Password: response.Password,
+	}
+
+	return user, nil
+}
+
+func (userClient *UserClient) GetUserByID(userID string) (*domain.User, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*2)
+	defer cancel()
+
+	response, err := userClient.client.GetUserByID(
+		ctx,
+		&userpb.GetUserRequest{
+			UserId: userID,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	user := &domain.User{
+		ID: response.UserId,
+		Username: response.Username,
 	}
 
 	return user, nil

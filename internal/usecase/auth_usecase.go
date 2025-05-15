@@ -9,21 +9,20 @@ import (
 )
 
 type authUseCase struct {
-	repo 			domain.UserRepository
 	tokenService 	domain.TokenService
 	logger 			*logrus.Entry
 	userClient		*client.UserClient
 }
 
-func NewAuthUseCase(r domain.UserRepository, t domain.TokenService) domain.AuthUseCase {
+func NewAuthUseCase(t domain.TokenService, userClient *client.UserClient) domain.AuthUseCase {
 	logger := logrus.New()
 	logger.SetFormatter(&logrus.JSONFormatter{})
 	logger.SetLevel(logrus.DebugLevel)
 
 	return &authUseCase{
-		repo: r,
 		tokenService: t,
 		logger: logger.WithField("component", "authUseCase"),
+		userClient: userClient,
 	}
 }
 
@@ -96,10 +95,5 @@ func (uc *authUseCase) GetUserByToken(token string) (*domain.User, error){
 	}
 
 	// find concrete user by userID
-	user, err := uc.repo.FindByID(userID)
-	if err != nil{
-		return nil, err
-	}
-
-	return user, nil
+	return uc.userClient.GetUserByID(userID)
 }
