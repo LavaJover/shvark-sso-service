@@ -10,9 +10,12 @@ import (
 	"github.com/LavaJover/shvark-sso-service/internal/config"
 	"github.com/LavaJover/shvark-sso-service/internal/delivery/grpcapi"
 	"github.com/LavaJover/shvark-sso-service/internal/infrastructure/jwt"
+	"github.com/LavaJover/shvark-sso-service/internal/interceptor"
 	"github.com/LavaJover/shvark-sso-service/internal/usecase"
 	ssopb "github.com/LavaJover/shvark-sso-service/proto/gen"
+	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_retry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
+	"go.uber.org/zap"
 	"google.golang.org/grpc"
 )
 
@@ -22,11 +25,15 @@ func main(){
 
 	fmt.Println(cfg)
 
+	// Init logger
+	logger, _ := zap.NewProduction()
+
 	// Init retry system
 	// Retry all calls with retryable errors (UNAVAILABLE, DEADLINE_EXCEEDED)
 	opts := []grpc_retry.CallOption{
-		grpc_retry.WithMax(3),
-		grpc_retry.WithBackoff(grpc_retry.BackoffExponential(500 * time.Millisecond)),
+		grpc_retry.WithMax(uint(cfg.MaxAttempts)),
+		grpc_retry.WithBackoff(grpc_retry.BackoffExponential(cfg.InitialBackoff)),
+		grpc_retry.WithCodes(grpc_retry.DefaultRetriableCodes...),
 	}
 
 	// init user-service client
@@ -48,7 +55,11 @@ func main(){
 	authUseCase := usecase.NewAuthUseCase(tokenService, userClient)
 
 	// creating gRPC server
-	grpcServer := grpc.NewServer()
+	grpcServer := grpc.NewServer(
+		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
+			interceptor.NewLoggerInterceptor(logger),
+		)),
+	)
 	authHandler := grpcapi.AuthHandler{AuthUseCase: authUseCase}
 
 	ssopb.RegisterSSOServiceServer(grpcServer, &authHandler)
