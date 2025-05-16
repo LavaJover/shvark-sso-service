@@ -12,6 +12,7 @@ import (
 	"github.com/LavaJover/shvark-sso-service/internal/infrastructure/jwt"
 	"github.com/LavaJover/shvark-sso-service/internal/usecase"
 	ssopb "github.com/LavaJover/shvark-sso-service/proto/gen"
+	grpc_retry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
 	"google.golang.org/grpc"
 )
 
@@ -19,8 +20,18 @@ func main(){
 	// processing app config
 	cfg := config.MustLoad()
 
+	// Init retry system
+	// Retry all calls with retryable errors (UNAVAILABLE, DEADLINE_EXCEEDED)
+	opts := []grpc_retry.CallOption{
+		grpc_retry.WithMax(3),
+		grpc_retry.WithBackoff(grpc_retry.BackoffExponential(500 * time.Millisecond)),
+	}
+
 	// init user-service client
-	conn, err := grpc.Dial("localhost:50052", grpc.WithInsecure())
+	conn, err := grpc.Dial(
+		"localhost:50052",
+		grpc.WithInsecure(),
+		grpc.WithUnaryInterceptor(grpc_retry.UnaryClientInterceptor(opts...)))
 	if err != nil {
 		log.Fatalf("failed to connect to user-service: %v\n", err)
 	}
