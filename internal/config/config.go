@@ -3,6 +3,8 @@ package config
 import (
 	"log"
 	"os"
+	"time"
+
 	"github.com/ilyakaznacheev/cleanenv"
 )
 
@@ -16,6 +18,15 @@ type SSOConfig struct {
 type GRPCServer struct {
 	Host string `yaml:"host"`
 	Port string `yaml:"port"`
+	RetryPolicy	`yaml:"retry_policy"`
+}
+
+type RetryPolicy struct {
+	MaxAttempts				int				`yaml:"max_attempts"`
+	InitialBackoff			time.Duration	`yaml:"initial_backoff"`
+	MaxBackoff				time.Duration	`yaml:"max_backoff"`
+	BackoffMultiplier		float32			`yaml:"backoff_multiplier"`
+	RetryableStatusCodes	[]string		`yaml:"retryable_status_codes"`
 }
 
 type SSODB struct {

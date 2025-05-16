@@ -2,6 +2,12 @@ env: "local"
 grpc_server:
   host: "localhost"
   port: "50051"
+  retry_policy:
+    max_attempts: 3
+    initial_backoff: "0.1s"
+    max_backoff: "1s"
+    backoff_multiplier: 2.0
+    retryable_status_codes: ["UNAVAILABLE"]
 log_config:
   log_level: "debug"
   log_format: "json"

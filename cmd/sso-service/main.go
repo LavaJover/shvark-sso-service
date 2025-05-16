@@ -20,6 +20,8 @@ func main(){
 	// processing app config
 	cfg := config.MustLoad()
 
+	fmt.Println(cfg)
+
 	// Init retry system
 	// Retry all calls with retryable errors (UNAVAILABLE, DEADLINE_EXCEEDED)
 	opts := []grpc_retry.CallOption{
