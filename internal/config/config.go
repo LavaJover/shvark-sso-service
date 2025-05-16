@@ -22,7 +22,7 @@ type GRPCServer struct {
 }
 
 type RetryPolicy struct {
-	MaxAttempts				int				`yaml:"max_attempts"`
+	MaxAttempts				uint			`yaml:"max_attempts"`
 	InitialBackoff			time.Duration	`yaml:"initial_backoff"`
 	MaxBackoff				time.Duration	`yaml:"max_backoff"`
 	BackoffMultiplier		float32			`yaml:"backoff_multiplier"`
