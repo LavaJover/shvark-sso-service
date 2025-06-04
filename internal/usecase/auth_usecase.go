@@ -64,7 +64,7 @@ func (uc *authUseCase) Login(login, password string) (string, error) {
 	// searching by login
 	user, err := uc.userClient.GetUserByLogin(login)
 	if err != nil{
-		return "", nil
+		return "", err
 	}
 
 	// checking password
