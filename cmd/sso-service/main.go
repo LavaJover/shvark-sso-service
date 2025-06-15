@@ -49,7 +49,7 @@ func main(){
 	userClient := client.NewUserClient(conn)
 
 	// creating token service
-	tokenService := jwt.NewTokenService("my-secret-word", 15*time.Minute)
+	tokenService := jwt.NewTokenService("my-secret-word", 12*time.Hour)
 
 	// creating Auth usecase
 	authUseCase := usecase.NewAuthUseCase(tokenService, userClient)
