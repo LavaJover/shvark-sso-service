@@ -225,6 +225,7 @@ type LoginRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Login         string                 `protobuf:"bytes,1,opt,name=login,proto3" json:"login,omitempty"`
 	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+	TwoFaCode     string                 `protobuf:"bytes,3,opt,name=two_fa_code,json=twoFaCode,proto3" json:"two_fa_code,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -269,6 +270,13 @@ func (x *LoginRequest) GetLogin() string {
 func (x *LoginRequest) GetPassword() string {
 	if x != nil {
 		return x.Password
+	}
+	return ""
+}
+
+func (x *LoginRequest) GetTwoFaCode() string {
+	if x != nil {
+		return x.TwoFaCode
 	}
 	return ""
 }
@@ -540,10 +548,11 @@ const file_sso_service_proto_rawDesc = "" +
 	"\bpassword\x18\x03 \x01(\tR\bpassword\"E\n" +
 	"\x10RegisterResponse\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"@\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"`\n" +
 	"\fLoginRequest\x12\x14\n" +
 	"\x05login\x18\x01 \x01(\tR\x05login\x12\x1a\n" +
-	"\bpassword\x18\x02 \x01(\tR\bpassword\"W\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x1e\n" +
+	"\vtwo_fa_code\x18\x03 \x01(\tR\ttwoFaCode\"W\n" +
 	"\rLoginResponse\x12!\n" +
 	"\faccess_token\x18\x01 \x01(\tR\vaccessToken\x12#\n" +
 	"\rrefresh_token\x18\x02 \x01(\tR\frefreshToken\"9\n" +

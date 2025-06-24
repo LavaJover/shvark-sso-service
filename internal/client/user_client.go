@@ -115,4 +115,4 @@ func (c *UserClient) SetTwoFaSecret(userID, twoFaSecret string) error {
 	)
 
 	return err
-} 
+}

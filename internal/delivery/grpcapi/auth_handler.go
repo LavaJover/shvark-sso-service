@@ -25,7 +25,7 @@ func (h *AuthHandler) Register(ctx context.Context, req *ssopb.RegisterRequest) 
 }
 
 func (h *AuthHandler) Login(ctx context.Context, req *ssopb.LoginRequest) (*ssopb.LoginResponse, error) {
-	accessToken, err := h.AuthUseCase.Login(req.Login, req.Password)
+	accessToken, err := h.AuthUseCase.Login(req.Login, req.Password, req.TwoFaCode)
 	if err != nil{
 		return nil, err
 	}

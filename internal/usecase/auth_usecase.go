@@ -7,6 +7,8 @@ import (
 	"github.com/google/uuid"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/crypto/bcrypt"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type authUseCase struct {
@@ -61,7 +63,7 @@ func (uc *authUseCase) Register(login, username, password string) (string, error
 	return userID, nil
 }
 
-func (uc *authUseCase) Login(login, password string) (string, error) {
+func (uc *authUseCase) Login(login, password, twoFaCode string) (string, error) {
 	// searching by login
 	user, err := uc.userClient.GetUserByLogin(login)
 	if err != nil{
@@ -71,6 +73,13 @@ func (uc *authUseCase) Login(login, password string) (string, error) {
 	// checking password
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
 		return "", err
+	}
+
+	// checking if user using google 2 FA
+	if user.TwoFaSecret != "" {
+		if !google2fa.Verify2FACode(user.TwoFaSecret, twoFaCode){
+			return "", status.Error(codes.Unauthenticated, "2FA failed")
+		}
 	}
 
 	// generating token

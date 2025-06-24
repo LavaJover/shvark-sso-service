@@ -2,7 +2,6 @@ package google2fa
 
 import "github.com/pquerna/otp/totp"
 
-
 func Generate2FASecret(login string) (secret string, qrURL string,err  error) {
 	key, err := totp.Generate(totp.GenerateOpts{
 		Issuer: "ShvarkPay",
@@ -13,4 +12,8 @@ func Generate2FASecret(login string) (secret string, qrURL string,err  error) {
 	}
 
 	return key.Secret(), key.URL(), nil
+}
+
+func Verify2FACode(secret, code string) bool {
+	return totp.Validate(code, secret)
 }
