@@ -23,6 +23,7 @@ const (
 	SSOService_Login_FullMethodName          = "/sso.SSOService/Login"
 	SSOService_ValidateToken_FullMethodName  = "/sso.SSOService/ValidateToken"
 	SSOService_GetUserByToken_FullMethodName = "/sso.SSOService/GetUserByToken"
+	SSOService_Setup2FA_FullMethodName       = "/sso.SSOService/Setup2FA"
 )
 
 // SSOServiceClient is the client API for SSOService service.
@@ -33,6 +34,7 @@ type SSOServiceClient interface {
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	ValidateToken(ctx context.Context, in *ValidateTokenRequest, opts ...grpc.CallOption) (*ValidateTokenResponse, error)
 	GetUserByToken(ctx context.Context, in *GetUserByTokenRequest, opts ...grpc.CallOption) (*GetUserByTokenResponse, error)
+	Setup2FA(ctx context.Context, in *Setup2FARequest, opts ...grpc.CallOption) (*Setup2FAResponse, error)
 }
 
 type sSOServiceClient struct {
@@ -83,6 +85,16 @@ func (c *sSOServiceClient) GetUserByToken(ctx context.Context, in *GetUserByToke
 	return out, nil
 }
 
+func (c *sSOServiceClient) Setup2FA(ctx context.Context, in *Setup2FARequest, opts ...grpc.CallOption) (*Setup2FAResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Setup2FAResponse)
+	err := c.cc.Invoke(ctx, SSOService_Setup2FA_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SSOServiceServer is the server API for SSOService service.
 // All implementations must embed UnimplementedSSOServiceServer
 // for forward compatibility.
@@ -91,6 +103,7 @@ type SSOServiceServer interface {
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
 	ValidateToken(context.Context, *ValidateTokenRequest) (*ValidateTokenResponse, error)
 	GetUserByToken(context.Context, *GetUserByTokenRequest) (*GetUserByTokenResponse, error)
+	Setup2FA(context.Context, *Setup2FARequest) (*Setup2FAResponse, error)
 	mustEmbedUnimplementedSSOServiceServer()
 }
 
@@ -112,6 +125,9 @@ func (UnimplementedSSOServiceServer) ValidateToken(context.Context, *ValidateTok
 }
 func (UnimplementedSSOServiceServer) GetUserByToken(context.Context, *GetUserByTokenRequest) (*GetUserByTokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserByToken not implemented")
+}
+func (UnimplementedSSOServiceServer) Setup2FA(context.Context, *Setup2FARequest) (*Setup2FAResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Setup2FA not implemented")
 }
 func (UnimplementedSSOServiceServer) mustEmbedUnimplementedSSOServiceServer() {}
 func (UnimplementedSSOServiceServer) testEmbeddedByValue()                    {}
@@ -206,6 +222,24 @@ func _SSOService_GetUserByToken_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SSOService_Setup2FA_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Setup2FARequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SSOServiceServer).Setup2FA(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SSOService_Setup2FA_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SSOServiceServer).Setup2FA(ctx, req.(*Setup2FARequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SSOService_ServiceDesc is the grpc.ServiceDesc for SSOService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -228,6 +262,10 @@ var SSOService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUserByToken",
 			Handler:    _SSOService_GetUserByToken_Handler,
+		},
+		{
+			MethodName: "Setup2FA",
+			Handler:    _SSOService_Setup2FA_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

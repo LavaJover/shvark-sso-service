@@ -71,6 +71,7 @@ func (userClient *UserClient) GetUserByLogin(login string) (*domain.User, error)
 		Login: response.Login,
 		Username: response.Username,
 		Password: response.Password,
+		TwoFaSecret: response.TwoFaSecret,
 	}
 
 	return user, nil
@@ -82,7 +83,7 @@ func (userClient *UserClient) GetUserByID(userID string) (*domain.User, error) {
 
 	response, err := userClient.client.GetUserByID(
 		ctx,
-		&userpb.GetUserRequest{
+		&userpb.GetUserByIDRequest{
 			UserId: userID,
 		},
 	)
@@ -93,7 +94,25 @@ func (userClient *UserClient) GetUserByID(userID string) (*domain.User, error) {
 	user := &domain.User{
 		ID: response.UserId,
 		Username: response.Username,
+		Login: response.Login,
+		Password: response.Password,
+		TwoFaSecret: response.TwoFaSecret,
 	}
 
 	return user, nil
 }
+
+func (c *UserClient) SetTwoFaSecret(userID, twoFaSecret string) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	_, err := c.client.SetTwoFaSecret(
+		ctx,
+		&userpb.SetTwoFaSecretRequest{
+			UserId: userID,
+			TwoFaSecret: twoFaSecret,
+		},
+	)
+
+	return err
+} 

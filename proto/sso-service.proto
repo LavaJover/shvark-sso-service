@@ -9,6 +9,15 @@ service SSOService{
     rpc Login (LoginRequest) returns (LoginResponse);
     rpc ValidateToken (ValidateTokenRequest) returns (ValidateTokenResponse);
     rpc GetUserByToken (GetUserByTokenRequest) returns (GetUserByTokenResponse);
+    rpc Setup2FA (Setup2FARequest) returns (Setup2FAResponse);
+}
+
+message Setup2FARequest {
+    string user_id = 1;
+}
+
+message Setup2FAResponse {
+    string qr_url = 1;
 }
 
 message RegisterRequest {

@@ -60,3 +60,15 @@ func (h *AuthHandler) GetUserByToken(ctx context.Context, req *ssopb.GetUserByTo
 		Username: user.Username,
 	}, nil
 }
+
+func (h *AuthHandler) Setup2FA(ctx context.Context, r *ssopb.Setup2FARequest) (*ssopb.Setup2FAResponse, error) {
+	userID := r.UserId
+	qrURL, err := h.AuthUseCase.Setup2FA(userID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &ssopb.Setup2FAResponse{
+		QrUrl: qrURL,
+	}, nil
+}

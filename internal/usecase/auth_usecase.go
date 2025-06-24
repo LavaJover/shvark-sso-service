@@ -3,6 +3,7 @@ package usecase
 import (
 	"github.com/LavaJover/shvark-sso-service/internal/client"
 	"github.com/LavaJover/shvark-sso-service/internal/domain"
+	"github.com/LavaJover/shvark-sso-service/internal/infrastructure/google2fa"
 	"github.com/google/uuid"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/crypto/bcrypt"
@@ -96,4 +97,23 @@ func (uc *authUseCase) GetUserByToken(token string) (*domain.User, error){
 
 	// find concrete user by userID
 	return uc.userClient.GetUserByID(userID)
+}
+
+func (uc *authUseCase) Setup2FA(userID string) (string, error) {
+	user, err := uc.userClient.GetUserByID(userID)
+	if err != nil {
+		return "", err
+	}
+	login := user.Login
+	secret, qrURL, err := google2fa.Generate2FASecret(login)
+	if err != nil {
+		return "", err
+	}
+
+	err = uc.userClient.SetTwoFaSecret(userID, secret)
+	if err != nil {
+		return "", err
+	}
+	
+	return qrURL, nil
 }

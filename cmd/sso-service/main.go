@@ -17,9 +17,15 @@ import (
 	grpc_retry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
+
+	"github.com/joho/godotenv"
 )
 
 func main(){
+	if err := godotenv.Load(); err != nil {
+		log.Println("failed to load .env")
+	}
+
 	// processing app config
 	cfg := config.MustLoad()
 
