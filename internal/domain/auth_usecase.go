@@ -6,4 +6,5 @@ type AuthUseCase interface {
 	ValidateToken(token string) (userID string, err error)
 	GetUserByToken(token string) (user *User, err error)
 	Setup2FA(userID string)	(string, error)
+	Verify2FA(userID, code string) (bool, error)
 }

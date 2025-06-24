@@ -10,6 +10,16 @@ service SSOService{
     rpc ValidateToken (ValidateTokenRequest) returns (ValidateTokenResponse);
     rpc GetUserByToken (GetUserByTokenRequest) returns (GetUserByTokenResponse);
     rpc Setup2FA (Setup2FARequest) returns (Setup2FAResponse);
+    rpc Verify2FA (Verify2FARequest) returns (Verify2FAResponse);
+}
+
+message Verify2FARequest {
+    string user_id = 1;
+    string code = 2;
+}
+
+message Verify2FAResponse {
+    bool verif = 1;
 }
 
 message Setup2FARequest {

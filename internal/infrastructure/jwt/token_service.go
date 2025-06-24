@@ -27,7 +27,7 @@ func (s *jwtTokenService) GenerateAccessToken(user *domain.User) (string, error)
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString([]byte(s.secretKey))
+	return  token.SignedString([]byte(s.secretKey))
 }
 
 func (s *jwtTokenService) GenerateRefreshToken(user *domain.User) (string, error) {

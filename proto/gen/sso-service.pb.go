@@ -21,6 +21,102 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type Verify2FARequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Code          string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Verify2FARequest) Reset() {
+	*x = Verify2FARequest{}
+	mi := &file_sso_service_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Verify2FARequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Verify2FARequest) ProtoMessage() {}
+
+func (x *Verify2FARequest) ProtoReflect() protoreflect.Message {
+	mi := &file_sso_service_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Verify2FARequest.ProtoReflect.Descriptor instead.
+func (*Verify2FARequest) Descriptor() ([]byte, []int) {
+	return file_sso_service_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *Verify2FARequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *Verify2FARequest) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+type Verify2FAResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Verif         bool                   `protobuf:"varint,1,opt,name=verif,proto3" json:"verif,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Verify2FAResponse) Reset() {
+	*x = Verify2FAResponse{}
+	mi := &file_sso_service_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Verify2FAResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Verify2FAResponse) ProtoMessage() {}
+
+func (x *Verify2FAResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_sso_service_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Verify2FAResponse.ProtoReflect.Descriptor instead.
+func (*Verify2FAResponse) Descriptor() ([]byte, []int) {
+	return file_sso_service_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *Verify2FAResponse) GetVerif() bool {
+	if x != nil {
+		return x.Verif
+	}
+	return false
+}
+
 type Setup2FARequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
@@ -30,7 +126,7 @@ type Setup2FARequest struct {
 
 func (x *Setup2FARequest) Reset() {
 	*x = Setup2FARequest{}
-	mi := &file_sso_service_proto_msgTypes[0]
+	mi := &file_sso_service_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -42,7 +138,7 @@ func (x *Setup2FARequest) String() string {
 func (*Setup2FARequest) ProtoMessage() {}
 
 func (x *Setup2FARequest) ProtoReflect() protoreflect.Message {
-	mi := &file_sso_service_proto_msgTypes[0]
+	mi := &file_sso_service_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -55,7 +151,7 @@ func (x *Setup2FARequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Setup2FARequest.ProtoReflect.Descriptor instead.
 func (*Setup2FARequest) Descriptor() ([]byte, []int) {
-	return file_sso_service_proto_rawDescGZIP(), []int{0}
+	return file_sso_service_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *Setup2FARequest) GetUserId() string {
@@ -74,7 +170,7 @@ type Setup2FAResponse struct {
 
 func (x *Setup2FAResponse) Reset() {
 	*x = Setup2FAResponse{}
-	mi := &file_sso_service_proto_msgTypes[1]
+	mi := &file_sso_service_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -86,7 +182,7 @@ func (x *Setup2FAResponse) String() string {
 func (*Setup2FAResponse) ProtoMessage() {}
 
 func (x *Setup2FAResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_sso_service_proto_msgTypes[1]
+	mi := &file_sso_service_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -99,7 +195,7 @@ func (x *Setup2FAResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Setup2FAResponse.ProtoReflect.Descriptor instead.
 func (*Setup2FAResponse) Descriptor() ([]byte, []int) {
-	return file_sso_service_proto_rawDescGZIP(), []int{1}
+	return file_sso_service_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *Setup2FAResponse) GetQrUrl() string {
@@ -120,7 +216,7 @@ type RegisterRequest struct {
 
 func (x *RegisterRequest) Reset() {
 	*x = RegisterRequest{}
-	mi := &file_sso_service_proto_msgTypes[2]
+	mi := &file_sso_service_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -132,7 +228,7 @@ func (x *RegisterRequest) String() string {
 func (*RegisterRequest) ProtoMessage() {}
 
 func (x *RegisterRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_sso_service_proto_msgTypes[2]
+	mi := &file_sso_service_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -145,7 +241,7 @@ func (x *RegisterRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RegisterRequest.ProtoReflect.Descriptor instead.
 func (*RegisterRequest) Descriptor() ([]byte, []int) {
-	return file_sso_service_proto_rawDescGZIP(), []int{2}
+	return file_sso_service_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *RegisterRequest) GetLogin() string {
@@ -179,7 +275,7 @@ type RegisterResponse struct {
 
 func (x *RegisterResponse) Reset() {
 	*x = RegisterResponse{}
-	mi := &file_sso_service_proto_msgTypes[3]
+	mi := &file_sso_service_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -191,7 +287,7 @@ func (x *RegisterResponse) String() string {
 func (*RegisterResponse) ProtoMessage() {}
 
 func (x *RegisterResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_sso_service_proto_msgTypes[3]
+	mi := &file_sso_service_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -204,7 +300,7 @@ func (x *RegisterResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RegisterResponse.ProtoReflect.Descriptor instead.
 func (*RegisterResponse) Descriptor() ([]byte, []int) {
-	return file_sso_service_proto_rawDescGZIP(), []int{3}
+	return file_sso_service_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *RegisterResponse) GetUserId() string {
@@ -232,7 +328,7 @@ type LoginRequest struct {
 
 func (x *LoginRequest) Reset() {
 	*x = LoginRequest{}
-	mi := &file_sso_service_proto_msgTypes[4]
+	mi := &file_sso_service_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -244,7 +340,7 @@ func (x *LoginRequest) String() string {
 func (*LoginRequest) ProtoMessage() {}
 
 func (x *LoginRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_sso_service_proto_msgTypes[4]
+	mi := &file_sso_service_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -257,7 +353,7 @@ func (x *LoginRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LoginRequest.ProtoReflect.Descriptor instead.
 func (*LoginRequest) Descriptor() ([]byte, []int) {
-	return file_sso_service_proto_rawDescGZIP(), []int{4}
+	return file_sso_service_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *LoginRequest) GetLogin() string {
@@ -291,7 +387,7 @@ type LoginResponse struct {
 
 func (x *LoginResponse) Reset() {
 	*x = LoginResponse{}
-	mi := &file_sso_service_proto_msgTypes[5]
+	mi := &file_sso_service_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -303,7 +399,7 @@ func (x *LoginResponse) String() string {
 func (*LoginResponse) ProtoMessage() {}
 
 func (x *LoginResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_sso_service_proto_msgTypes[5]
+	mi := &file_sso_service_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -316,7 +412,7 @@ func (x *LoginResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LoginResponse.ProtoReflect.Descriptor instead.
 func (*LoginResponse) Descriptor() ([]byte, []int) {
-	return file_sso_service_proto_rawDescGZIP(), []int{5}
+	return file_sso_service_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *LoginResponse) GetAccessToken() string {
@@ -342,7 +438,7 @@ type ValidateTokenRequest struct {
 
 func (x *ValidateTokenRequest) Reset() {
 	*x = ValidateTokenRequest{}
-	mi := &file_sso_service_proto_msgTypes[6]
+	mi := &file_sso_service_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -354,7 +450,7 @@ func (x *ValidateTokenRequest) String() string {
 func (*ValidateTokenRequest) ProtoMessage() {}
 
 func (x *ValidateTokenRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_sso_service_proto_msgTypes[6]
+	mi := &file_sso_service_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -367,7 +463,7 @@ func (x *ValidateTokenRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ValidateTokenRequest.ProtoReflect.Descriptor instead.
 func (*ValidateTokenRequest) Descriptor() ([]byte, []int) {
-	return file_sso_service_proto_rawDescGZIP(), []int{6}
+	return file_sso_service_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *ValidateTokenRequest) GetAccessToken() string {
@@ -387,7 +483,7 @@ type ValidateTokenResponse struct {
 
 func (x *ValidateTokenResponse) Reset() {
 	*x = ValidateTokenResponse{}
-	mi := &file_sso_service_proto_msgTypes[7]
+	mi := &file_sso_service_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -399,7 +495,7 @@ func (x *ValidateTokenResponse) String() string {
 func (*ValidateTokenResponse) ProtoMessage() {}
 
 func (x *ValidateTokenResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_sso_service_proto_msgTypes[7]
+	mi := &file_sso_service_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -412,7 +508,7 @@ func (x *ValidateTokenResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ValidateTokenResponse.ProtoReflect.Descriptor instead.
 func (*ValidateTokenResponse) Descriptor() ([]byte, []int) {
-	return file_sso_service_proto_rawDescGZIP(), []int{7}
+	return file_sso_service_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ValidateTokenResponse) GetValid() bool {
@@ -438,7 +534,7 @@ type GetUserByTokenRequest struct {
 
 func (x *GetUserByTokenRequest) Reset() {
 	*x = GetUserByTokenRequest{}
-	mi := &file_sso_service_proto_msgTypes[8]
+	mi := &file_sso_service_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -450,7 +546,7 @@ func (x *GetUserByTokenRequest) String() string {
 func (*GetUserByTokenRequest) ProtoMessage() {}
 
 func (x *GetUserByTokenRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_sso_service_proto_msgTypes[8]
+	mi := &file_sso_service_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -463,7 +559,7 @@ func (x *GetUserByTokenRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserByTokenRequest.ProtoReflect.Descriptor instead.
 func (*GetUserByTokenRequest) Descriptor() ([]byte, []int) {
-	return file_sso_service_proto_rawDescGZIP(), []int{8}
+	return file_sso_service_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *GetUserByTokenRequest) GetAccessToken() string {
@@ -484,7 +580,7 @@ type GetUserByTokenResponse struct {
 
 func (x *GetUserByTokenResponse) Reset() {
 	*x = GetUserByTokenResponse{}
-	mi := &file_sso_service_proto_msgTypes[9]
+	mi := &file_sso_service_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -496,7 +592,7 @@ func (x *GetUserByTokenResponse) String() string {
 func (*GetUserByTokenResponse) ProtoMessage() {}
 
 func (x *GetUserByTokenResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_sso_service_proto_msgTypes[9]
+	mi := &file_sso_service_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -509,7 +605,7 @@ func (x *GetUserByTokenResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserByTokenResponse.ProtoReflect.Descriptor instead.
 func (*GetUserByTokenResponse) Descriptor() ([]byte, []int) {
-	return file_sso_service_proto_rawDescGZIP(), []int{9}
+	return file_sso_service_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *GetUserByTokenResponse) GetUserId() string {
@@ -537,7 +633,12 @@ var File_sso_service_proto protoreflect.FileDescriptor
 
 const file_sso_service_proto_rawDesc = "" +
 	"\n" +
-	"\x11sso-service.proto\x12\x03sso\"*\n" +
+	"\x11sso-service.proto\x12\x03sso\"?\n" +
+	"\x10Verify2FARequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x12\n" +
+	"\x04code\x18\x02 \x01(\tR\x04code\")\n" +
+	"\x11Verify2FAResponse\x12\x14\n" +
+	"\x05verif\x18\x01 \x01(\bR\x05verif\"*\n" +
 	"\x0fSetup2FARequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\")\n" +
 	"\x10Setup2FAResponse\x12\x15\n" +
@@ -566,14 +667,15 @@ const file_sso_service_proto_rawDesc = "" +
 	"\x16GetUserByTokenResponse\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x14\n" +
 	"\x05login\x18\x02 \x01(\tR\x05login\x12\x1a\n" +
-	"\busername\x18\x03 \x01(\tR\busername2\xc1\x02\n" +
+	"\busername\x18\x03 \x01(\tR\busername2\xfd\x02\n" +
 	"\n" +
 	"SSOService\x127\n" +
 	"\bRegister\x12\x14.sso.RegisterRequest\x1a\x15.sso.RegisterResponse\x12.\n" +
 	"\x05Login\x12\x11.sso.LoginRequest\x1a\x12.sso.LoginResponse\x12F\n" +
 	"\rValidateToken\x12\x19.sso.ValidateTokenRequest\x1a\x1a.sso.ValidateTokenResponse\x12I\n" +
 	"\x0eGetUserByToken\x12\x1a.sso.GetUserByTokenRequest\x1a\x1b.sso.GetUserByTokenResponse\x127\n" +
-	"\bSetup2FA\x12\x14.sso.Setup2FARequest\x1a\x15.sso.Setup2FAResponseB9Z7github.com/LavaJover/shvark-sso-service/proto/gen;ssopbb\x06proto3"
+	"\bSetup2FA\x12\x14.sso.Setup2FARequest\x1a\x15.sso.Setup2FAResponse\x12:\n" +
+	"\tVerify2FA\x12\x15.sso.Verify2FARequest\x1a\x16.sso.Verify2FAResponseB9Z7github.com/LavaJover/shvark-sso-service/proto/gen;ssopbb\x06proto3"
 
 var (
 	file_sso_service_proto_rawDescOnce sync.Once
@@ -587,35 +689,39 @@ func file_sso_service_proto_rawDescGZIP() []byte {
 	return file_sso_service_proto_rawDescData
 }
 
-var file_sso_service_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_sso_service_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_sso_service_proto_goTypes = []any{
-	(*Setup2FARequest)(nil),        // 0: sso.Setup2FARequest
-	(*Setup2FAResponse)(nil),       // 1: sso.Setup2FAResponse
-	(*RegisterRequest)(nil),        // 2: sso.RegisterRequest
-	(*RegisterResponse)(nil),       // 3: sso.RegisterResponse
-	(*LoginRequest)(nil),           // 4: sso.LoginRequest
-	(*LoginResponse)(nil),          // 5: sso.LoginResponse
-	(*ValidateTokenRequest)(nil),   // 6: sso.ValidateTokenRequest
-	(*ValidateTokenResponse)(nil),  // 7: sso.ValidateTokenResponse
-	(*GetUserByTokenRequest)(nil),  // 8: sso.GetUserByTokenRequest
-	(*GetUserByTokenResponse)(nil), // 9: sso.GetUserByTokenResponse
+	(*Verify2FARequest)(nil),       // 0: sso.Verify2FARequest
+	(*Verify2FAResponse)(nil),      // 1: sso.Verify2FAResponse
+	(*Setup2FARequest)(nil),        // 2: sso.Setup2FARequest
+	(*Setup2FAResponse)(nil),       // 3: sso.Setup2FAResponse
+	(*RegisterRequest)(nil),        // 4: sso.RegisterRequest
+	(*RegisterResponse)(nil),       // 5: sso.RegisterResponse
+	(*LoginRequest)(nil),           // 6: sso.LoginRequest
+	(*LoginResponse)(nil),          // 7: sso.LoginResponse
+	(*ValidateTokenRequest)(nil),   // 8: sso.ValidateTokenRequest
+	(*ValidateTokenResponse)(nil),  // 9: sso.ValidateTokenResponse
+	(*GetUserByTokenRequest)(nil),  // 10: sso.GetUserByTokenRequest
+	(*GetUserByTokenResponse)(nil), // 11: sso.GetUserByTokenResponse
 }
 var file_sso_service_proto_depIdxs = []int32{
-	2, // 0: sso.SSOService.Register:input_type -> sso.RegisterRequest
-	4, // 1: sso.SSOService.Login:input_type -> sso.LoginRequest
-	6, // 2: sso.SSOService.ValidateToken:input_type -> sso.ValidateTokenRequest
-	8, // 3: sso.SSOService.GetUserByToken:input_type -> sso.GetUserByTokenRequest
-	0, // 4: sso.SSOService.Setup2FA:input_type -> sso.Setup2FARequest
-	3, // 5: sso.SSOService.Register:output_type -> sso.RegisterResponse
-	5, // 6: sso.SSOService.Login:output_type -> sso.LoginResponse
-	7, // 7: sso.SSOService.ValidateToken:output_type -> sso.ValidateTokenResponse
-	9, // 8: sso.SSOService.GetUserByToken:output_type -> sso.GetUserByTokenResponse
-	1, // 9: sso.SSOService.Setup2FA:output_type -> sso.Setup2FAResponse
-	5, // [5:10] is the sub-list for method output_type
-	0, // [0:5] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	4,  // 0: sso.SSOService.Register:input_type -> sso.RegisterRequest
+	6,  // 1: sso.SSOService.Login:input_type -> sso.LoginRequest
+	8,  // 2: sso.SSOService.ValidateToken:input_type -> sso.ValidateTokenRequest
+	10, // 3: sso.SSOService.GetUserByToken:input_type -> sso.GetUserByTokenRequest
+	2,  // 4: sso.SSOService.Setup2FA:input_type -> sso.Setup2FARequest
+	0,  // 5: sso.SSOService.Verify2FA:input_type -> sso.Verify2FARequest
+	5,  // 6: sso.SSOService.Register:output_type -> sso.RegisterResponse
+	7,  // 7: sso.SSOService.Login:output_type -> sso.LoginResponse
+	9,  // 8: sso.SSOService.ValidateToken:output_type -> sso.ValidateTokenResponse
+	11, // 9: sso.SSOService.GetUserByToken:output_type -> sso.GetUserByTokenResponse
+	3,  // 10: sso.SSOService.Setup2FA:output_type -> sso.Setup2FAResponse
+	1,  // 11: sso.SSOService.Verify2FA:output_type -> sso.Verify2FAResponse
+	6,  // [6:12] is the sub-list for method output_type
+	0,  // [0:6] is the sub-list for method input_type
+	0,  // [0:0] is the sub-list for extension type_name
+	0,  // [0:0] is the sub-list for extension extendee
+	0,  // [0:0] is the sub-list for field type_name
 }
 
 func init() { file_sso_service_proto_init() }
@@ -629,7 +735,7 @@ func file_sso_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_sso_service_proto_rawDesc), len(file_sso_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

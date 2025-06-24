@@ -72,3 +72,15 @@ func (h *AuthHandler) Setup2FA(ctx context.Context, r *ssopb.Setup2FARequest) (*
 		QrUrl: qrURL,
 	}, nil
 }
+
+func (h *AuthHandler) Verify2FA(ctx context.Context, r *ssopb.Verify2FARequest) (*ssopb.Verify2FAResponse, error) {
+	userID, code := r.UserId, r.Code
+	verif, err := h.AuthUseCase.Verify2FA(userID, code)
+	if err != nil {
+		return nil, err
+	}
+
+	return &ssopb.Verify2FAResponse{
+		Verif: verif,
+	}, nil
+}

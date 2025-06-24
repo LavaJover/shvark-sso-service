@@ -8,6 +8,10 @@ github.com/LavaJover/shvark-user-service v0.0.1 h1:Y2boFz8H4WV42+mXUh/d2r15uqyfx
 github.com/LavaJover/shvark-user-service v0.0.1/go.mod h1:Dkv1niga/z8A4FB/IqdBzP45d224PH3dKUTWY08i8LI=
 github.com/LavaJover/shvark-user-service v0.0.4 h1:0dgIJC/wWDEG/uP1n+fK42QIcAkq11RXv3es/Y4jHY8=
 github.com/LavaJover/shvark-user-service v0.0.4/go.mod h1:/U/fTTKpGkY7DMNs8nQ6xqLKGCY1WW3jZio2WQOEEfw=
+github.com/LavaJover/shvark-user-service v0.0.5 h1:1tmI13jsA8mvbyzaSQr1yN8HSYYcgouEY5cJIFTsqiY=
+github.com/LavaJover/shvark-user-service v0.0.5/go.mod h1:/U/fTTKpGkY7DMNs8nQ6xqLKGCY1WW3jZio2WQOEEfw=
+github.com/LavaJover/shvark-user-service v0.0.6 h1:AdtlAPJRgmu5W4wV31YWNDsDb1Yu2x2BixuYCzy0Zi4=
+github.com/LavaJover/shvark-user-service v0.0.6/go.mod h1:/U/fTTKpGkY7DMNs8nQ6xqLKGCY1WW3jZio2WQOEEfw=
 github.com/benbjohnson/clock v1.1.0/go.mod h1:J11/hYXuz8f4ySSvYwY0FKfm+ezbsZBKZxNJlLklBHA=
 github.com/boombuler/barcode v1.0.1-0.20190219062509-6c824513bacc h1:biVzkmvwrH8WK8raXaxBx6fRVTlJILwEwQGL1I/ByEI=
 github.com/boombuler/barcode v1.0.1-0.20190219062509-6c824513bacc/go.mod h1:paBWMcWSl3LHKBqUq+rly7CNSldXjb2rDl3JlRe0mD8=

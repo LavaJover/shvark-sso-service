@@ -116,3 +116,18 @@ func (c *UserClient) SetTwoFaSecret(userID, twoFaSecret string) error {
 
 	return err
 }
+
+func (c *UserClient) SetTwoFaEnabled(userID string, enabled bool) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	_, err := c.client.SetTwoFaEnabled(
+		ctx,
+		&userpb.SetTwoFaEnabledRequest{
+			UserId: userID,
+			Enabled: enabled,
+		},
+	)
+
+	return err
+}

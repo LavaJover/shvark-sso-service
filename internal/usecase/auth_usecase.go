@@ -76,10 +76,12 @@ func (uc *authUseCase) Login(login, password, twoFaCode string) (string, error) 
 	}
 
 	// checking if user using google 2 FA
-	if user.TwoFaSecret != "" {
-		if !google2fa.Verify2FACode(user.TwoFaSecret, twoFaCode){
-			return "", status.Error(codes.Unauthenticated, "2FA failed")
-		}
+	if user.TwoFaEnabled && twoFaCode == "" {
+		return "", status.Error(codes.Unauthenticated, "2FA_REQUIRED")
+	}
+
+	if user.TwoFaEnabled && !google2fa.Verify2FACode(user.TwoFaSecret, twoFaCode) {
+		return "", status.Error(codes.Unauthenticated, "WRONG_CREDENTIALS")
 	}
 
 	// generating token
@@ -123,6 +125,23 @@ func (uc *authUseCase) Setup2FA(userID string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+
+	err = uc.userClient.SetTwoFaEnabled(userID, false)
+	if err != nil {
+		return "", err
+	}
 	
 	return qrURL, nil
+}
+
+func (uc *authUseCase) Verify2FA(userID, code string) (bool, error) {
+	user, err := uc.userClient.GetUserByID(userID)
+	if err != nil {
+		return false, err
+	}
+	if google2fa.Verify2FACode(user.TwoFaSecret, code) {
+		uc.userClient.SetTwoFaEnabled(userID, true)
+		return true, nil
+	}
+	return false, nil
 }
