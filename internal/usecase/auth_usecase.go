@@ -1,6 +1,8 @@
 package usecase
 
 import (
+	"fmt"
+
 	"github.com/LavaJover/shvark-sso-service/internal/client"
 	"github.com/LavaJover/shvark-sso-service/internal/domain"
 	"github.com/LavaJover/shvark-sso-service/internal/infrastructure/google2fa"
@@ -70,6 +72,8 @@ func (uc *authUseCase) Login(login, password, twoFaCode string) (string, error) 
 		return "", err
 	}
 
+	fmt.Println(user.TwoFaEnabled, twoFaCode)
+
 	// checking password
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
 		return "", err
@@ -114,6 +118,10 @@ func (uc *authUseCase) Setup2FA(userID string) (string, error) {
 	user, err := uc.userClient.GetUserByID(userID)
 	if err != nil {
 		return "", err
+	}
+	// Проверка: если уже создан secret, то не пересоздавать!
+	if user.TwoFaSecret != "" {
+		return fmt.Sprintf("otpauth://totp/%s:%s?secret=%s&issuer=%s", "ShavrkPay", user.Login, user.TwoFaSecret, "ShvarkPay"), nil
 	}
 	login := user.Login
 	secret, qrURL, err := google2fa.Generate2FASecret(login)

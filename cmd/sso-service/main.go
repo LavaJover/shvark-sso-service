@@ -44,7 +44,7 @@ func main(){
 
 	// init user-service client
 	conn, err := grpc.Dial(
-		"localhost:50052",
+		"user-service:50052",
 		grpc.WithInsecure(),
 		grpc.WithUnaryInterceptor(grpc_retry.UnaryClientInterceptor(opts...)))
 	if err != nil {

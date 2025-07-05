@@ -72,6 +72,7 @@ func (userClient *UserClient) GetUserByLogin(login string) (*domain.User, error)
 		Username: response.Username,
 		Password: response.Password,
 		TwoFaSecret: response.TwoFaSecret,
+		TwoFaEnabled: response.TwoFaEnabled,
 	}
 
 	return user, nil
@@ -97,6 +98,7 @@ func (userClient *UserClient) GetUserByID(userID string) (*domain.User, error) {
 		Login: response.Login,
 		Password: response.Password,
 		TwoFaSecret: response.TwoFaSecret,
+		TwoFaEnabled: response.TwoFaEnabled,
 	}
 
 	return user, nil
