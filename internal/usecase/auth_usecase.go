@@ -72,8 +72,6 @@ func (uc *authUseCase) Login(login, password, twoFaCode string) (string, error) 
 		return "", err
 	}
 
-	fmt.Println(user.TwoFaEnabled, twoFaCode)
-
 	// checking password
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
 		return "", err

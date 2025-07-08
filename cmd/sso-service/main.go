@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"os"
 	"time"
 
 	"github.com/LavaJover/shvark-sso-service/internal/client"
@@ -29,7 +30,7 @@ func main(){
 	// processing app config
 	cfg := config.MustLoad()
 
-	fmt.Println(cfg)
+	fmt.Println(cfg.UserService.Host)
 
 	// Init logger
 	logger, _ := zap.NewProduction()
@@ -44,7 +45,7 @@ func main(){
 
 	// init user-service client
 	conn, err := grpc.Dial(
-		"localhost:50052",
+		fmt.Sprintf("%s:%s", cfg.UserService.Host, cfg.UserService.Port),
 		grpc.WithInsecure(),
 		grpc.WithUnaryInterceptor(grpc_retry.UnaryClientInterceptor(opts...)))
 	if err != nil {
@@ -55,7 +56,7 @@ func main(){
 	userClient := client.NewUserClient(conn)
 
 	// creating token service
-	tokenService := jwt.NewTokenService("my-secret-word", 12*time.Hour)
+	tokenService := jwt.NewTokenService(os.Getenv("JWT_SECRET"), 12*time.Hour)
 
 	// creating Auth usecase
 	authUseCase := usecase.NewAuthUseCase(tokenService, userClient)
@@ -71,12 +72,12 @@ func main(){
 	ssopb.RegisterSSOServiceServer(grpcServer, &authHandler)
 
 	// start
-	lis, err := net.Listen("tcp", ":"+cfg.Port)
+	lis, err := net.Listen("tcp", fmt.Sprintf("%s:%s", cfg.GRPCServer.Host, cfg.GRPCServer.Port))
 	if err != nil{
 		log.Fatalf("failed to listen: %v", err)
 	}
 
-	fmt.Printf("gRPC server started on %s:%s\n", cfg.Host, cfg.Port)
+	fmt.Printf("gRPC server started on %s:%s\n", cfg.GRPCServer.Host, cfg.GRPCServer.Port)
 	if err := grpcServer.Serve(lis); err != nil{
 		log.Fatalf("failed to serve: %v\n", err)
 	}

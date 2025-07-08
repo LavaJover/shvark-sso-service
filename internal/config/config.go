@@ -13,6 +13,7 @@ type SSOConfig struct {
 	GRPCServer 	`yaml:"grpc_server"`
 	SSODB 		`yaml:"sso_db"`
 	LogConfig 	`yaml:"log_config"`
+	UserService `yaml:"user-service"`
 }
 
 type GRPCServer struct {
@@ -37,6 +38,11 @@ type LogConfig struct {
 	LogLevel 	string 	`yaml:"log_level"`
 	LogFormat 	string 	`yaml:"log_format"`
 	LogOutput 	string 	`yaml:"log_output"`
+}
+
+type UserService struct {
+	Host string `yaml:"host"`
+	Port string `yaml:"port"`
 }
 
 func MustLoad() *SSOConfig {

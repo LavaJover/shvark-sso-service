@@ -12,3 +12,6 @@ log_config:
   log_level: "debug"
   log_format: "json"
   log_output: "stdout"
+user-service:
+  host: "localhost"
+  port: "50052"
