@@ -39,7 +39,7 @@ func (uc *authUseCase) Register(login, username, password string) (string, error
 
 	// is login already in use?
 	if exist, _ := uc.userClient.CheckUserExists(login); exist{
-		return "", domain.ErrLoginAlreadyTaken
+		return "", status.Error(codes.AlreadyExists, "login is already taken")
 	}
 
 	// hashing password
@@ -74,7 +74,7 @@ func (uc *authUseCase) Login(login, password, twoFaCode string) (string, error) 
 
 	// checking password
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
-		return "", err
+		return "", status.Error(codes.Unauthenticated, "wrong password")
 	}
 
 	// checking if user using google 2 FA
