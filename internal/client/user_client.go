@@ -42,6 +42,7 @@ func (userClient *UserClient) CreateUser(user *domain.User) (string, error) {
 			Login: user.Login,
 			Username: user.Username,
 			Password: user.Password,
+			Role: user.Role,
 		},
 	)
 
