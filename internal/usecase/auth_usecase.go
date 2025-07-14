@@ -31,7 +31,7 @@ func NewAuthUseCase(t domain.TokenService, userClient *client.UserClient) domain
 	}
 }
 
-func (uc *authUseCase) Register(login, username, password string) (string, error) {
+func (uc *authUseCase) Register(login, username, password, role string) (string, error) {
 	uc.logger.WithFields(logrus.Fields{
 		"action": "Register",
 		"login": "login",
@@ -54,6 +54,7 @@ func (uc *authUseCase) Register(login, username, password string) (string, error
 		Login: login,
 		Username: username,
 		Password: string(hashed),
+		Role: role,
 	}
 
 	// saving user on client side to database

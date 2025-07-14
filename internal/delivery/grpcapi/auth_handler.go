@@ -13,7 +13,7 @@ type AuthHandler struct {
 }
 
 func (h *AuthHandler) Register(ctx context.Context, req *ssopb.RegisterRequest) (*ssopb.RegisterResponse, error) {
-	userID, err := h.AuthUseCase.Register(req.Login, req.Username, req.Password)
+	userID, err := h.AuthUseCase.Register(req.Login, req.Username, req.Password, req.Role)
 	if err != nil{
 		return nil, err
 	}

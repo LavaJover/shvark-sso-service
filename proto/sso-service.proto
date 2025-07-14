@@ -34,6 +34,7 @@ message RegisterRequest {
     string login = 1;
     string username = 2;
     string password = 3;
+    string role = 4;
 }
 
 message RegisterResponse {
@@ -69,4 +70,5 @@ message GetUserByTokenResponse {
     string user_id = 1;
     string login = 2;
     string username = 3;
+    string role = 4;
 }

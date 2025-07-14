@@ -210,6 +210,7 @@ type RegisterRequest struct {
 	Login         string                 `protobuf:"bytes,1,opt,name=login,proto3" json:"login,omitempty"`
 	Username      string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
 	Password      string                 `protobuf:"bytes,3,opt,name=password,proto3" json:"password,omitempty"`
+	Role          string                 `protobuf:"bytes,4,opt,name=role,proto3" json:"role,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -261,6 +262,13 @@ func (x *RegisterRequest) GetUsername() string {
 func (x *RegisterRequest) GetPassword() string {
 	if x != nil {
 		return x.Password
+	}
+	return ""
+}
+
+func (x *RegisterRequest) GetRole() string {
+	if x != nil {
+		return x.Role
 	}
 	return ""
 }
@@ -574,6 +582,7 @@ type GetUserByTokenResponse struct {
 	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	Login         string                 `protobuf:"bytes,2,opt,name=login,proto3" json:"login,omitempty"`
 	Username      string                 `protobuf:"bytes,3,opt,name=username,proto3" json:"username,omitempty"`
+	Role          string                 `protobuf:"bytes,4,opt,name=role,proto3" json:"role,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -629,6 +638,13 @@ func (x *GetUserByTokenResponse) GetUsername() string {
 	return ""
 }
 
+func (x *GetUserByTokenResponse) GetRole() string {
+	if x != nil {
+		return x.Role
+	}
+	return ""
+}
+
 var File_sso_service_proto protoreflect.FileDescriptor
 
 const file_sso_service_proto_rawDesc = "" +
@@ -642,11 +658,12 @@ const file_sso_service_proto_rawDesc = "" +
 	"\x0fSetup2FARequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\")\n" +
 	"\x10Setup2FAResponse\x12\x15\n" +
-	"\x06qr_url\x18\x01 \x01(\tR\x05qrUrl\"_\n" +
+	"\x06qr_url\x18\x01 \x01(\tR\x05qrUrl\"s\n" +
 	"\x0fRegisterRequest\x12\x14\n" +
 	"\x05login\x18\x01 \x01(\tR\x05login\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x1a\n" +
-	"\bpassword\x18\x03 \x01(\tR\bpassword\"E\n" +
+	"\bpassword\x18\x03 \x01(\tR\bpassword\x12\x12\n" +
+	"\x04role\x18\x04 \x01(\tR\x04role\"E\n" +
 	"\x10RegisterResponse\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\"`\n" +
@@ -663,11 +680,12 @@ const file_sso_service_proto_rawDesc = "" +
 	"\x05valid\x18\x01 \x01(\bR\x05valid\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\":\n" +
 	"\x15GetUserByTokenRequest\x12!\n" +
-	"\faccess_token\x18\x01 \x01(\tR\vaccessToken\"c\n" +
+	"\faccess_token\x18\x01 \x01(\tR\vaccessToken\"w\n" +
 	"\x16GetUserByTokenResponse\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x14\n" +
 	"\x05login\x18\x02 \x01(\tR\x05login\x12\x1a\n" +
-	"\busername\x18\x03 \x01(\tR\busername2\xfd\x02\n" +
+	"\busername\x18\x03 \x01(\tR\busername\x12\x12\n" +
+	"\x04role\x18\x04 \x01(\tR\x04role2\xfd\x02\n" +
 	"\n" +
 	"SSOService\x127\n" +
 	"\bRegister\x12\x14.sso.RegisterRequest\x1a\x15.sso.RegisterResponse\x12.\n" +

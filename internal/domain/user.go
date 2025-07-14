@@ -9,6 +9,7 @@ type User struct {
 	Password 		string // hashed password
 	TwoFaSecret 	string
 	TwoFaEnabled 	bool
+	Role 			string
 	CreatedAt 		time.Time
 	UpdatedAt 		time.Time
 }
