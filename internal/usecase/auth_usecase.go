@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/LavaJover/shvark-sso-service/internal/client"
 	"github.com/LavaJover/shvark-sso-service/internal/domain"
@@ -66,34 +67,34 @@ func (uc *authUseCase) Register(login, username, password, role string) (string,
 	return userID, nil
 }
 
-func (uc *authUseCase) Login(login, password, twoFaCode string) (string, error) {
+func (uc *authUseCase) Login(login, password, twoFaCode string) (string, time.Time, error) {
 	// searching by login
 	user, err := uc.userClient.GetUserByLogin(login)
 	if err != nil{
-		return "", err
+		return "", time.Now(), err
 	}
 
 	// checking password
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
-		return "", status.Error(codes.Unauthenticated, "wrong password")
+		return "", time.Now(), status.Error(codes.Unauthenticated, "wrong password")
 	}
 
 	// checking if user using google 2 FA
 	if user.TwoFaEnabled && twoFaCode == "" {
-		return "", status.Error(codes.Unauthenticated, "2FA_REQUIRED")
+		return "", time.Now(), status.Error(codes.Unauthenticated, "2FA_REQUIRED")
 	}
 
 	if user.TwoFaEnabled && !google2fa.Verify2FACode(user.TwoFaSecret, twoFaCode) {
-		return "", status.Error(codes.Unauthenticated, "WRONG_CREDENTIALS")
+		return "", time.Now(), status.Error(codes.Unauthenticated, "WRONG_CREDENTIALS")
 	}
 
 	// generating token
-	token, err := uc.tokenService.GenerateAccessToken(user)
+	token, timeExp, err := uc.tokenService.GenerateAccessToken(user)
 	if err != nil {
-		return "", err
+		return "", time.Now(), err
 	}
 
-	return token, nil
+	return token, timeExp, nil
 
 }
 

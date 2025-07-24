@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package sso;
 
+import "google/protobuf/timestamp.proto";
+
 option go_package = "github.com/LavaJover/shvark-sso-service/proto/gen;ssopb";
 
 service SSOService{
@@ -51,6 +53,7 @@ message LoginRequest {
 message LoginResponse {
     string access_token = 1;
     string refresh_token = 2;
+    google.protobuf.Timestamp time_exp = 3;
 }
 
 message ValidateTokenRequest {

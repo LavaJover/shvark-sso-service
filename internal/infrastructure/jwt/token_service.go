@@ -20,17 +20,18 @@ func NewTokenService(secretKey string, ttl time.Duration) domain.TokenService {
 	}
 }
 
-func (s *jwtTokenService) GenerateAccessToken(user *domain.User) (string, error){
+func (s *jwtTokenService) GenerateAccessToken(user *domain.User) (string, time.Time, error){
 	claims := jwt.MapClaims{
 		"user_id": user.ID,
 		"exp":     time.Now().Add(s.ttl).Unix(),
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return  token.SignedString([]byte(s.secretKey))
+	tokenStr, err := token.SignedString([]byte(s.secretKey))
+	return tokenStr, time.Now().Add(s.ttl), err
 }
 
-func (s *jwtTokenService) GenerateRefreshToken(user *domain.User) (string, error) {
+func (s *jwtTokenService) GenerateRefreshToken(user *domain.User) (string, time.Time, error) {
 	// improve later...
 	return s.GenerateAccessToken(user)
 }

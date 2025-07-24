@@ -9,6 +9,7 @@ package ssopb
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -389,6 +390,7 @@ type LoginResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	AccessToken   string                 `protobuf:"bytes,1,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
 	RefreshToken  string                 `protobuf:"bytes,2,opt,name=refresh_token,json=refreshToken,proto3" json:"refresh_token,omitempty"`
+	TimeExp       *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=time_exp,json=timeExp,proto3" json:"time_exp,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -435,6 +437,13 @@ func (x *LoginResponse) GetRefreshToken() string {
 		return x.RefreshToken
 	}
 	return ""
+}
+
+func (x *LoginResponse) GetTimeExp() *timestamppb.Timestamp {
+	if x != nil {
+		return x.TimeExp
+	}
+	return nil
 }
 
 type ValidateTokenRequest struct {
@@ -649,7 +658,7 @@ var File_sso_service_proto protoreflect.FileDescriptor
 
 const file_sso_service_proto_rawDesc = "" +
 	"\n" +
-	"\x11sso-service.proto\x12\x03sso\"?\n" +
+	"\x11sso-service.proto\x12\x03sso\x1a\x1fgoogle/protobuf/timestamp.proto\"?\n" +
 	"\x10Verify2FARequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x12\n" +
 	"\x04code\x18\x02 \x01(\tR\x04code\")\n" +
@@ -670,10 +679,11 @@ const file_sso_service_proto_rawDesc = "" +
 	"\fLoginRequest\x12\x14\n" +
 	"\x05login\x18\x01 \x01(\tR\x05login\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x1e\n" +
-	"\vtwo_fa_code\x18\x03 \x01(\tR\ttwoFaCode\"W\n" +
+	"\vtwo_fa_code\x18\x03 \x01(\tR\ttwoFaCode\"\x8e\x01\n" +
 	"\rLoginResponse\x12!\n" +
 	"\faccess_token\x18\x01 \x01(\tR\vaccessToken\x12#\n" +
-	"\rrefresh_token\x18\x02 \x01(\tR\frefreshToken\"9\n" +
+	"\rrefresh_token\x18\x02 \x01(\tR\frefreshToken\x125\n" +
+	"\btime_exp\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\atimeExp\"9\n" +
 	"\x14ValidateTokenRequest\x12!\n" +
 	"\faccess_token\x18\x01 \x01(\tR\vaccessToken\"F\n" +
 	"\x15ValidateTokenResponse\x12\x14\n" +
@@ -721,25 +731,27 @@ var file_sso_service_proto_goTypes = []any{
 	(*ValidateTokenResponse)(nil),  // 9: sso.ValidateTokenResponse
 	(*GetUserByTokenRequest)(nil),  // 10: sso.GetUserByTokenRequest
 	(*GetUserByTokenResponse)(nil), // 11: sso.GetUserByTokenResponse
+	(*timestamppb.Timestamp)(nil),  // 12: google.protobuf.Timestamp
 }
 var file_sso_service_proto_depIdxs = []int32{
-	4,  // 0: sso.SSOService.Register:input_type -> sso.RegisterRequest
-	6,  // 1: sso.SSOService.Login:input_type -> sso.LoginRequest
-	8,  // 2: sso.SSOService.ValidateToken:input_type -> sso.ValidateTokenRequest
-	10, // 3: sso.SSOService.GetUserByToken:input_type -> sso.GetUserByTokenRequest
-	2,  // 4: sso.SSOService.Setup2FA:input_type -> sso.Setup2FARequest
-	0,  // 5: sso.SSOService.Verify2FA:input_type -> sso.Verify2FARequest
-	5,  // 6: sso.SSOService.Register:output_type -> sso.RegisterResponse
-	7,  // 7: sso.SSOService.Login:output_type -> sso.LoginResponse
-	9,  // 8: sso.SSOService.ValidateToken:output_type -> sso.ValidateTokenResponse
-	11, // 9: sso.SSOService.GetUserByToken:output_type -> sso.GetUserByTokenResponse
-	3,  // 10: sso.SSOService.Setup2FA:output_type -> sso.Setup2FAResponse
-	1,  // 11: sso.SSOService.Verify2FA:output_type -> sso.Verify2FAResponse
-	6,  // [6:12] is the sub-list for method output_type
-	0,  // [0:6] is the sub-list for method input_type
-	0,  // [0:0] is the sub-list for extension type_name
-	0,  // [0:0] is the sub-list for extension extendee
-	0,  // [0:0] is the sub-list for field type_name
+	12, // 0: sso.LoginResponse.time_exp:type_name -> google.protobuf.Timestamp
+	4,  // 1: sso.SSOService.Register:input_type -> sso.RegisterRequest
+	6,  // 2: sso.SSOService.Login:input_type -> sso.LoginRequest
+	8,  // 3: sso.SSOService.ValidateToken:input_type -> sso.ValidateTokenRequest
+	10, // 4: sso.SSOService.GetUserByToken:input_type -> sso.GetUserByTokenRequest
+	2,  // 5: sso.SSOService.Setup2FA:input_type -> sso.Setup2FARequest
+	0,  // 6: sso.SSOService.Verify2FA:input_type -> sso.Verify2FARequest
+	5,  // 7: sso.SSOService.Register:output_type -> sso.RegisterResponse
+	7,  // 8: sso.SSOService.Login:output_type -> sso.LoginResponse
+	9,  // 9: sso.SSOService.ValidateToken:output_type -> sso.ValidateTokenResponse
+	11, // 10: sso.SSOService.GetUserByToken:output_type -> sso.GetUserByTokenResponse
+	3,  // 11: sso.SSOService.Setup2FA:output_type -> sso.Setup2FAResponse
+	1,  // 12: sso.SSOService.Verify2FA:output_type -> sso.Verify2FAResponse
+	7,  // [7:13] is the sub-list for method output_type
+	1,  // [1:7] is the sub-list for method input_type
+	1,  // [1:1] is the sub-list for extension type_name
+	1,  // [1:1] is the sub-list for extension extendee
+	0,  // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_sso_service_proto_init() }

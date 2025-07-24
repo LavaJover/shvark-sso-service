@@ -5,6 +5,7 @@ import (
 
 	"github.com/LavaJover/shvark-sso-service/internal/domain"
 	ssopb "github.com/LavaJover/shvark-sso-service/proto/gen"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 type AuthHandler struct {
@@ -25,7 +26,7 @@ func (h *AuthHandler) Register(ctx context.Context, req *ssopb.RegisterRequest) 
 }
 
 func (h *AuthHandler) Login(ctx context.Context, req *ssopb.LoginRequest) (*ssopb.LoginResponse, error) {
-	accessToken, err := h.AuthUseCase.Login(req.Login, req.Password, req.TwoFaCode)
+	accessToken, timeExp, err := h.AuthUseCase.Login(req.Login, req.Password, req.TwoFaCode)
 	if err != nil{
 		return nil, err
 	}
@@ -33,6 +34,7 @@ func (h *AuthHandler) Login(ctx context.Context, req *ssopb.LoginRequest) (*ssop
 	return &ssopb.LoginResponse{
 		AccessToken: accessToken,
 		RefreshToken: accessToken,
+		TimeExp: timestamppb.New(timeExp),
 	}, nil
 }
 
